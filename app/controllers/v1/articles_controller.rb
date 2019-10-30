@@ -1,11 +1,15 @@
 class V1::ArticlesController < ApplicationController
   def index
-    articles = Article.all
-    if articles.empty? 
+    @articles = Article.all
+    if @articles.empty? 
       render_error_message("There are no articles here", 404)
     else
       render json: articles, each_serializer: Articles::IndexSerializer
     end
+  end
+
+  def show
+    @article = Article.find(params[:id])
   end
 
   def create
